@@ -55,6 +55,7 @@ class BiasedBeamSearchSampler:
             models: a sequence of RNN or Transformer objects.
             configs: a sequence of model configs (argparse.Namespace objects).
             beam_size: an integer specifying the beam width.
+            beta: a float between 0.0 and 1.0 specifying the value of bias
         """
         self._models = models
         self._configs = configs
@@ -134,6 +135,9 @@ def _beam_search(model_adapters, beam_size, batch_size_x, max_translation_len,
             length normalization.
         vocab_size: float specifying the target vocabulary size.
         eos_id: integer specifying the vocabulary ID of the EOS symbol.
+        last_translation: sequence of integers specifying token ids in last translated prefix
+        last_translation_len: integer specifying the length of last translated prefix
+        beta: a float between 0.0 and 1.0 specifying the value of bias
 
     Returns:
         A pair of tensors: (sequences, scores). sequences contains vocabulary

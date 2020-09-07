@@ -166,3 +166,18 @@ def read_all_lines(config, sentences, batch_size):
         batches.append(batch)
 
     return batches, idxs
+
+def LCP(prefixes, line):
+    res = 0
+    prefixes = [line] + [(prefix[:-1]).split() for prefix in prefixes]
+    # print(prefixes)
+    for toks in zip(*prefixes):
+        if not all_same(toks):
+            return prefixes[0][:res]
+        else:
+            res += 1
+    # assert res == min(len(prefix1), len(prefix2))
+    return prefixes[0][:res]
+
+def all_same(items):
+    return all(x == items[0] for x in items)

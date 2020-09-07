@@ -862,7 +862,7 @@ class ConfigSpecification:
         group.append(ParameterSpecification(
             name='translation_strategy', default='beam_search',
             visible_arg_names=['--translation_strategy'],
-            type=str, choices=['beam_search', 'sampling'],
+            type=str, choices=['beam_search', 'sampling', 'biased_beam_search'],
             help='translation_strategy, either beam_search or sampling (default: %(default)s)'))
 
         # Add Add command-line parameters for 'MRT' group.

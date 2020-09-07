@@ -114,8 +114,17 @@ class TranslationSettings(BaseSettings):
             help="softmax temperature used for sampling (default %(default)s)")
 
         self._parser.add_argument(
-            '--translation_strategy', type=str, choices=['beam_search', 'sampling'], default="beam_search",
+            '--translation_strategy', type=str, choices=['beam_search', 'sampling', 'biased_beam_search'], default="beam_search",
             help="translation_strategy, either beam_search or sampling (default: %(default)s)")
+
+        self._parser.add_argument(
+            '--beta', type=float, default=0.0)
+
+        self._parser.add_argument(
+            '--mask', type=str, default='0')
+
+        self._parser.add_argument(
+            '--extended_translations', type=str, default='')
 
     def _set_additional_vars(self):
         self.request_id = uuid.uuid4()

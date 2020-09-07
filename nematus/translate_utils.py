@@ -169,3 +169,5 @@ def translate_file(input_file, output_file, session, sampler, config,
     duration = time.time() - start_time
     logging.info('Translated {} sents in {} sec. Speed {} sents/sec'.format(
         num_translated, duration, num_translated/duration))
+
+    output_file.flush()
