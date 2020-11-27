@@ -15,7 +15,7 @@ import time
 
 # Start logging.
 level = logging.INFO
-logging.basicConfig(filename='../model/model.log', filemode='w', level=level, format='%(levelname)s: %(message)s')
+logging.basicConfig(level=level, format='%(levelname)s: %(message)s')
 
 import numpy
 import tensorflow as tf

@@ -12,15 +12,38 @@ from queue import Empty
 
 import numpy
 
-from beam_search_sampler import BeamSearchSampler
-from config import load_config_from_json_file
-import exception
-import model_loader
-import rnn_model
-from transformer import Transformer as TransformerModel
-import translate_utils
-import util
+# ModuleNotFoundError is new in 3.6; older versions will throw SystemError
+if sys.version_info < (3, 6):
+    ModuleNotFoundError = SystemError
 
+try:
+    from .beam_search_sampler import BeamSearchSampler
+    from .config import load_config_from_json_file
+    from . import exception
+    from . import model_loader
+    from . import rnn_model
+    from .transformer import Transformer as TransformerModel
+    from . import translate_utils
+    from . import util
+except (ModuleNotFoundError, ImportError) as e:
+    from beam_search_sampler import BeamSearchSampler
+    from config import load_config_from_json_file
+    import exception
+    import model_loader
+    import rnn_model
+    from transformer import Transformer as TransformerModel
+    import translate_utils
+    import util
+
+
+
+#
+#    import exception
+#    import rnn_inference
+#    import sampler_inputs
+#    from transformer import INT_DTYPE, FLOAT_DTYPE
+#    import transformer_inference
+#
 
 class Translation(object):
     """
@@ -116,7 +139,7 @@ class Translator(object):
         import tensorflow as tf
         models = []
         for i, options in enumerate(self._options):
-            with tf.variable_scope("model%d" % i) as scope:
+            with tf.compat.v1.variable_scope("model%d" % i) as scope:
                 if options.model_type == "transformer":
                     model = TransformerModel(options)
                 else:
@@ -136,9 +159,9 @@ class Translator(object):
 
         # load TF functionality
         import tensorflow as tf
-        tf_config = tf.ConfigProto()
+        tf_config = tf.compat.v1.ConfigProto()
         tf_config.allow_soft_placement = True
-        sess = tf.Session(config=tf_config)
+        sess = tf.compat.v1.Session(config=tf_config)
         models = self._load_models(process_id, sess)
 
         samplers = {}
