@@ -37,7 +37,6 @@ def translate_batch_slt(session, sampler, x, x_mask, max_translation_len,
         k elements (where k is the beam size), sorted by score in best-first
         order.
     """
-    # print('last_translation:\t',last_translation)
 
     x_tiled = numpy.tile(x, reps=[1, 1, sampler.beam_size])
     x_mask_tiled = numpy.tile(x_mask, reps=[1, sampler.beam_size])
@@ -316,9 +315,10 @@ def translate_file(input_file, output_file, session, sampler, config,
 
     extension_files = extended_translations.split('+')
     extensions = []
-    for extension_file in extension_files:
-        extension = open(extension_file, 'r').readlines()
-        extensions.append(extension)
+    # This is for integration of biased beam search and dynamic mask, but not used
+    #for extension_file in extension_files:
+    #    extension = open(extension_file, 'r').readlines()
+    #    extensions.append(extension)
     
 
     # extensions = open(extended_translations, 'r').readlines()
